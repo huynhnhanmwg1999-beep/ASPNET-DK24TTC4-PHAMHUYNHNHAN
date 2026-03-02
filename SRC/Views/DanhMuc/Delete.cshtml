@@ -1,0 +1,16 @@
+﻿@model QuanLySanBong.Models.PlayGround
+@{
+    Layout = "~/Views/Shared/LayoutSanbong.cshtml";
+    ViewData["Title"] = "Xoá sân bóng";
+}
+<h3>@ViewData["Title"]</h3>
+
+<div class="alert alert-danger">
+    <p style="color:white">Bạn có chắc muốn xoá sân: <strong>@Model.PlayGroundName</strong> (ID: @Model.PlayGroundId)?</p>
+</div>
+
+<form asp-action="Delete" method="post">
+    <input type="hidden" asp-for="PlayGroundId" />
+    <button class="btn btn-danger">Xoá</button>
+    <a asp-action="Index" class="btn btn-warning ms-1">Hủy</a>
+</form>

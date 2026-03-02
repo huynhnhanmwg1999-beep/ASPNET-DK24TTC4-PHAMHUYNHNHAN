@@ -1,0 +1,70 @@
+﻿@model Tuple<List<TimeSlot>, List<SubYard>, List<YardDetail>, List<YardDetail>>
+@{
+    var selectedItems3 = Model.Item3.Select(yd => new YardDetail
+            {
+                PlayGroundId = yd.PlayGroundId,
+                SubYardId = yd.SubYardId,
+                TimeSlotId = yd.TimeSlotId
+            });
+
+    var selectedItems4 = Model.Item4.Select(yd => new YardDetail
+            {
+                PlayGroundId = yd.PlayGroundId,
+                SubYardId = yd.SubYardId,
+                TimeSlotId = yd.TimeSlotId
+            });
+}
+<table class="table table-bordered" style="border: pink 2px solid">
+    <thead>
+        <tr style="text-align: left !important">
+            <th>Tên Sân</th>
+            @foreach (var s in Model.Item1)
+            {
+                <th>@s.TimeStart.ToString(@"h\:mm") - @s.TimeEnd.ToString(@"h\:mm")</th>
+            }
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item2 in Model.Item2)
+        {
+            <tr>
+                <td style="display: flex; justify-content: center;">@item2.SubYardName</td>
+                @foreach (var item1 in Model.Item1)
+                {
+                    YardDetail yardDetail = new YardDetail
+                    {
+                        PlayGroundId = @ViewBag.PlayGroundId,
+                        SubYardId = item2.SubYardId,
+                        TimeSlotId = item1.TimeSlotId
+                    };
+
+                    @if (selectedItems3.Where(p => p.PlayGroundId == @ViewBag.PlayGroundId
+                   && p.SubYardId == item2.SubYardId
+                   && p.TimeSlotId == item1.TimeSlotId).Count() > 0
+                   && selectedItems4.Where(p => p.PlayGroundId == @ViewBag.PlayGroundId
+                   && p.SubYardId == item2.SubYardId
+                   && p.TimeSlotId == item1.TimeSlotId).Count() == 0)
+                    {
+                        <td>
+                            <a class="btn btn-success add-button" style="display: flex; justify-content: center; margin-bottom:0"
+                               data-subyardid="@item2.SubYardId"
+                               data-timeslotid="@item1.TimeSlotId"
+                               data-playgroundid="@ViewBag.PlayGroundId"
+                               onclick="handleClick(this)">
+                                Thêm
+                            </a>
+                        </td>
+                    }
+                    else
+                    {
+                        <td>
+                            <a class="btn btn-danger disabled" style="display: flex; justify-content: center; margin-bottom:0">
+                                Hết
+                            </a>
+                        </td>
+                    }
+                }
+            </tr>
+        }
+    </tbody>
+</table>

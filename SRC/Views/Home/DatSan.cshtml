@@ -1,0 +1,126 @@
+﻿@{
+    Layout = "~/Views/Shared/LayoutSanbong.cshtml";
+}
+@* khung giờ, sân con, các chi tiết sân, các chi tiết sân đã được đặt trong ngày ... *@
+@model Tuple<List<TimeSlot>, List<SubYard>, List<YardDetail>, List<YardDetail>>
+@{
+    var selectedItems3 = Model.Item3.Select(yd => new YardDetail
+            {
+                PlayGroundId = yd.PlayGroundId,
+                SubYardId = yd.SubYardId,
+                TimeSlotId = yd.TimeSlotId
+            });
+
+    var selectedItems4 = Model.Item4.Select(yd => new YardDetail
+            {
+                PlayGroundId = yd.PlayGroundId,
+                SubYardId = yd.SubYardId,
+                TimeSlotId = yd.TimeSlotId
+            });
+}
+
+<div style="display: inline-flex" class="mb-5">
+    <label class="form-label me-3" for="datepicker">Chọn ngày đặt sân</label>
+    <div class="" style="border-radius: 20px">
+        <input type="date" id="datepicker" name="datepicker" min="@DateTime.Now.ToString("yyyy-MM-dd")">
+    </div>
+</div>
+
+<div id="content" class="row" style="width: 100%">
+    <table class="table table-bordered" style="border: pink 2px solid">
+        <thead>
+            <tr style="text-align: left !important">
+                <th>Tên Sân</th>
+                @foreach (var s in Model.Item1)
+                {
+                    <th>@s.TimeStart.ToString(@"h\:mm") - @s.TimeEnd.ToString(@"h\:mm")</th>
+                }
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item2 in Model.Item2)
+            {
+                <tr>
+                    <td style="display: flex; justify-content: center;">@item2.SubYardName</td>
+                    @foreach (var item1 in Model.Item1)
+                    {
+                        YardDetail yardDetail = new YardDetail
+                    {
+                        PlayGroundId = @ViewBag.PlayGroundId,
+                        SubYardId = item2.SubYardId,
+                        TimeSlotId = item1.TimeSlotId
+                    };
+
+                        @if (selectedItems3.Where(p => p.PlayGroundId == @ViewBag.PlayGroundId
+                       && p.SubYardId == item2.SubYardId
+                       && p.TimeSlotId == item1.TimeSlotId).Count() > 0
+                       && selectedItems4.Where(p => p.PlayGroundId == @ViewBag.PlayGroundId
+                       && p.SubYardId == item2.SubYardId
+                       && p.TimeSlotId == item1.TimeSlotId).Count() == 0)
+                        {
+                            <td>
+                                <a class="btn btn-success add-button" style="display: flex; justify-content: center; margin-bottom:0"
+                                   data-subyardid="@item2.SubYardId"
+                                   data-timeslotid="@item1.TimeSlotId"
+                                   data-playgroundid="@ViewBag.PlayGroundId"
+                                   onclick="handleClick(this)">
+                                    Thêm
+                                </a>
+                            </td>
+                        }
+                        else
+                        {
+                            <td>
+                                <a class="btn btn-danger disabled" style="display: flex; justify-content: center; margin-bottom:0">
+                                    Hết
+                                </a>
+                            </td>
+                        }
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+@section Scripts{
+    <script>
+        // đặt giá trị mặc định của input date là ngày hôm nay
+        document.addEventListener("DOMContentLoaded", function () {
+            var currentDate = new Date().toISOString().split("T")[0];
+            document.getElementById("datepicker").value = currentDate;
+
+            var message = '@Html.Raw(TempData["Message"])';
+            if (message && message !== "") {
+                alert(message);
+            }
+        });
+
+        // Xử lí khi thay đổi ngày
+        var playGroundId = @Html.Raw(Json.Serialize(ViewBag.PlayGroundId));
+
+        var dateInput = document.getElementById("datepicker");
+        dateInput.addEventListener("change", function () {
+            var selectedDate = dateInput.value;
+            $.ajax({
+                url: "DateBookChange",
+                data: { datebook: selectedDate, mid: playGroundId },
+                success: function (response) {
+                    $("div#content").html(response);
+                }
+            })
+        });
+
+        // Xử lí khi người dùng bấm vào nút thêm
+        function handleClick(element) {
+            var subYardId = element.getAttribute("data-subyardid");
+            var timeSlotId = element.getAttribute("data-timeslotid");
+            var playGroundId = element.getAttribute("data-playgroundid");
+            var dateBook = dateInput.value;
+            // Sử dụng subYardId, timeSlotId, playGroundId ở đây cho mục đích xử lý tiếp theo
+            var url = '/Home/CheckSan?subYardId=' + subYardId + '&timeSlotId=' + timeSlotId
+                + '&playGroundId=' + playGroundId + '&dateBook=' + dateBook;
+            window.location.href = url;
+        }
+    </script>
+}
+    

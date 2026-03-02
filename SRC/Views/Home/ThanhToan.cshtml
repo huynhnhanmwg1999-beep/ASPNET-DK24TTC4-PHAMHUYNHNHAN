@@ -1,0 +1,132 @@
+﻿@{
+   Layout = "~/Views/Shared/LayoutSanbong.cshtml";
+
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Pharma &mdash; Colorlib Template</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="https://fonts.googleapis.com/css?family=Rubik:400,700|Crimson+Text:400,400i" rel="stylesheet">
+    <link rel="stylesheet" href="~/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/cart/css/magnific-popup.css">
+    <link rel="stylesheet" href="~/cart/css/jquery-ui.css">
+    <link rel="stylesheet" href="~/cart/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="~/cart/css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="~/cart/css/aos.css">
+    <link rel="stylesheet" href="~/cart/css/style.css">
+</head>
+
+<body>
+     <div class="site-section">
+         <div class="container">
+            <div class="row">
+                <div class="col-md-6 mb-5 mb-md-0">
+                    <h2 class="h3 mb-3 text-black">Billing Details</h2>
+                    <div class="p-3 p-lg-5 border">                          
+                        <div class="form-group row">
+                            <div class="col-md-6">
+                                <label for="c_fname" class="text-black">First Name <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="c_fname" name="c_fname" style="border: 1px solid rgb(224,224,224)">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="c_lname" class="text-black">Last Name <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="c_lname" name="c_lname" style="border: 1px solid rgb(224,224,224)">
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <div class="col-md-12">
+                                <label for="c_companyname" class="text-black">Company Name </label>
+                                <input type="text" class="form-control" id="c_companyname" name="c_companyname" style="border: 1px solid rgb(224,224,224)">
+                            </div>
+                        </div>                         
+                        <div class="form-group row mb-5">
+                            <div class="col-md-6">
+                                <label for="c_email_address" class="text-black">Email Address <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="c_email_address" name="c_email_address" style="border: 1px solid rgb(224,224,224)">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="c_phone" class="text-black">Phone <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="c_phone" name="c_phone" placeholder="Phone Number" style="border: 1px solid rgb(224,224,224)">
+                            </div>
+                        </div>   
+                    </div>
+                </div>
+                <div class="col-md-6">
+
+                    <div class="row mb-5">
+                        <div class="col-md-12">
+                            <h2 class="h3 mb-3 text-black">Coupon Code</h2>
+                            <div class="p-3 p-lg-5 border">
+
+                                <label for="c_code" class="text-black mb-3">Enter your coupon code if you have one</label>
+                                <div class="input-group w-100">
+                                    <input type="text" class="form-control me-sm-3" id="c_code" placeholder="Coupon Code" aria-label="Coupon Code"
+                                           aria-describedby="button-addon2" style="border: 1px solid rgb(224,224,224)">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-primary btn-group-sm px-5" type="button" id="button-addon2">Apply</button>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-5">
+                        <div class="col-md-12">
+                            <h2 class="h3 mb-3 text-black">Your Order</h2>
+                            <div class="p-3 p-lg-5 border">
+                                <table class="table site-block-order-table mb-5">
+                                    <thead>
+                                        <th>Product</th>
+                                        <th>Total</th>
+                                    </thead>                                     
+                                    <tbody>
+                                        <tr>
+                                            <td>Bioderma <strong class="mx-2">x</strong> 1</td>
+                                            <td>$55.00</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Ibuprofeen <strong class="mx-2">x</strong> 1</td>
+                                            <td>$45.00</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-black font-weight-bold"><strong>Cart Subtotal</strong></td>
+                                            <td class="text-black">$350.00</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-black font-weight-bold"><strong>Order Total</strong></td>
+                                            <td class="text-black font-weight-bold"><strong>$350.00</strong></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <div class="form-group row">
+                                    <button class="btn btn-primary btn-lg btn-block" onclick="window.location='thankyou.html'">
+                                        Place
+                                        Order
+                                    </button>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="~/cart/js/jquery-3.3.1.min.js"></script>
+    <script src="~/cart/js/jquery-ui.js"></script>
+    <script src="~/cart/js/popper.min.js"></script>
+    <script src="~/cart/js/bootstrap.min.js"></script>
+    <script src="~/cart/js/owl.carousel.min.js"></script>
+    <script src="~/cart/js/jquery.magnific-popup.min.js"></script>
+    <script src="~/cart/js/aos.js"></script>
+    <script src="~/cart/js/main.js"></script>
+</body>
+</html>

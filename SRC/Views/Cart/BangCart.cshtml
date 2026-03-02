@@ -1,0 +1,56 @@
+﻿@using System.Globalization;
+@model Tuple<List<CartDetail>, User>
+
+@{
+    var Total = 0;
+}
+<p class="mb-5 text-center">
+    <i class="text-info font-weight-bold">@Model.Item1.Count().ToString()</i> items in your cart
+</p>
+<table id="shoppingCart" class="table table-condensed table-responsive">
+    <thead>
+        <tr>
+            <th style="width:40%">PlayGround</th>
+            <th style="width:22%">Time</th>
+            <th style="width:10%">Price</th>
+            <th style="width:16%"></th>
+        </tr>
+    </thead>
+    <tbody>   
+        @foreach (var item in Model.Item1)
+        {
+            <tr>
+                <td data-th="PlayGround">
+                    <div class="row">
+                        <div class="col-md-3 text-left">
+                            <img src="~/img/sanbongnhantao.jpg" alt="" class="img-fluid d-none d-md-block rounded mb-2 shadow ">
+                        </div>
+                        <div class="col-md-9 text-left mt-sm-2" style="margin-top:0 !important">
+                            <h5>@item.YardDetail.PlayGround.PlayGroundName</h5>
+                            <p class="font-weight-light">@item.YardDetail.SubYard.SubYardName</p>
+                        </div>
+                    </div>
+                </td>
+                <td data-th="Time">
+                    <div class="text-left" style="margin-top:0 !important">
+                        <p style="margin-bottom: 0.4em">@item.DateBook.ToString("dd/MM/yyyy")</p>
+                        <p class="font-weight-light">@item.YardDetail.TimeSlot.TimeStart.ToString(@"h\:mm") - @item.YardDetail.TimeSlot.TimeEnd.ToString(@"h\:mm")</p>
+                    </div>
+                </td>
+                <td data-th="Price">@item.YardDetail.Price</td>
+                <td class="actions" data-th="">
+                    <div class="text-right">
+                        <button class="btn btn-white border-secondary bg-white btn-md mb-2 delete-item" id="@item.CartDetailId">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            Total = Total + item.Price;
+        }
+    </tbody>
+</table>
+<div class="float-right text-center">
+    <h4>Subtotal:</h4>
+    <h1>@Total.ToString("C", new CultureInfo("vi-VN"))</h1>
+</div>

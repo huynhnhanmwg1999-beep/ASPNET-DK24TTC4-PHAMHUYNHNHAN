@@ -1,0 +1,85 @@
+﻿@{
+    Layout = "~/Views/Shared/LayoutSanbong.cshtml";
+}
+@model Tuple<List<YardDetail>, List<InvoiceDetail>, List<Invoice>, User>
+@{
+    var displayedPlayGroundNames = new HashSet<string>();
+}
+<div class="container-fluid py-4">
+    <div class="row">
+        <div class="col-12">
+            <div class="card my-4">
+                <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+                    <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
+                        <h6 class="text-white text-capitalize ps-3">Lịch sử đặt sân</h6>
+                    </div>
+                </div>
+                <div class="card-body px-0 pb-2">
+                    <div class="table-responsive p-0">
+                        <table class="table align-items-center mb-0">
+                            <thead>
+                                <tr>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Sân bóng</th>
+                                   @* <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Function</th>*@
+                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Trạng thái</th>
+                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Ngày đặt</th>
+                                    <th class="text-secondary opacity-7"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var invoice in Model.Item3)
+                                {
+                                    displayedPlayGroundNames.Clear();
+                                    <tr>
+                                        <td>
+                                            <div class="d-flex px-2 py-1">
+                                                <div>
+                                                    <img src="../assets/img/SanBongLS.png" class="avatar avatar-sm me-3 border-radius-lg" alt="user1">
+                                                </div>
+                                                <div class="d-flex flex-column justify-content-center">
+                                                    @foreach (var invoiceDetail in Model.Item2)
+                                                    {
+                                                        @foreach (var yardDetail in Model.Item1)
+                                                        {
+                                                            if (invoiceDetail.InvoiceId == invoice.InvoiceId && invoiceDetail.YardDetailId == yardDetail.YardDetailId)
+                                                            {
+                                                                if (!displayedPlayGroundNames.Contains(yardDetail.PlayGround.PlayGroundName))
+                                                                {
+                                                                    <h6 class="mb-0 text-sm">@yardDetail.PlayGround.PlayGroundName</h6>
+                                                                    displayedPlayGroundNames.Add(yardDetail.PlayGround.PlayGroundName);
+                                                                }
+                                                                break;
+                                                            }                                                          
+                                                        }
+                                                    }
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="align-middle text-center text-sm">
+                                            <span class="badge badge-sm bg-gradient-success">Đã thanh toán</span>
+                                            @* @if (invoice.IsPaid)
+                                            {
+                                            }
+                                            else
+                                            {
+                                                <span class="badge badge-sm bg-gradient-s">Chưa thanh toán</span>
+                                            } *@
+                                        </td>
+                                        <td class="align-middle text-center">
+                                            <span class="text-secondary text-xs font-weight-bold">@invoice.DateCreate.ToString("dd/MM/yyyy")</span>
+                                        </td>
+                                        <td class="align-middle">
+                                            <a class="text-secondary font-weight-bold text-xs" asp-controller="Home" asp-action="HoaDon" asp-route-userId="@ViewBag.userId" asp-route-invoideId="@invoice.InvoiceId">
+                                                Chi tiết
+                                            </a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>   

@@ -1,0 +1,153 @@
+﻿@{
+    Layout = "~/Views/Shared/LayoutSanbong.cshtml";
+
+}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Pharma &mdash; Colorlib Template</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css?family=Rubik:400,700|Crimson+Text:400,400i" rel="stylesheet">
+    <link rel="stylesheet" href="~/cart/css/magnific-popup.css">
+    <link rel="stylesheet" href="~/cart/css/jquery-ui.css">
+    <link rel="stylesheet" href="~/cart/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="~/cart/css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="~/cart/css/aos.css">
+    <link rel="stylesheet" href="~/cart/css/style.css">
+    <link href="~/assets/css/checkbox.css" rel="stylesheet" />
+</head>
+
+
+<body>
+    <div class="site-wrap">     
+        <div class="site-section">
+            <div class="container">
+                <div class="row mb-5">
+                    <form class="col-md-12" method="post">
+                        <div class="site-blocks-table">
+                            <table class="table table-bordered" style="border: 1px solid black">
+                                <thead>
+                                    <tr>
+                                        <th >Sân bóng</th>
+                                        <th >Sân số</th>
+                                        <th >Giá</th>
+                                        <th >Thời gian</th>
+                                        @*<th class="product-total">Total</th>*@
+                                        <th>Chọn</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="product-thumbnail">                                            
+                                            <h6 class="text-black">Sân Bóng Thành Phát</h6>
+                                        </td>
+                                        <td class="product-name">
+                                            <h6>Sân 1</h6>
+                                        </td>
+                                        <td>$55.00</td>
+                                        <td>
+                                            <h6>22:00 - 23:30</h6>
+                                        </td>                                
+                                        <td>
+                                            <div class="custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input" id="checkbox1">
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td class="product-thumbnail last-row">
+                                            <h6 class="text-black">Sân bóng Tuấn Phong</h6>
+                                        </td>
+                                        <td class="product-name last-row">
+                                            <h6>Sân 3</h6>
+                                        </td>
+                                        <td class="last-row">$49.00</td>
+                                        <td class="last-row">
+                                            <h6>19:00 - 20:30</h6>
+                                        </td>
+                                        <td class="last-row">
+                                            <div class="custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input" id="checkbox1">
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="row mb-5">
+                            <div class="col-md-6 mb-3 mb-md-0">
+                                <button class="btn btn-primary btn-group-sm px-7 btn-block">Update Cart</button>
+                            </div>
+                            <div class="col-md-6">
+                                <button class="btn btn-outline-primary btn-group-sm px-6  btn-block">Continue Shopping</button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label class="text-black h4" for="coupon">Coupon</label>
+                                <p>Enter your coupon code if you have one.</p>
+                            </div>
+                            <div class="col-md-8 mb-3 mb-md-0">
+                                <input type="text" class="form-control py-3" id="coupon" placeholder="Coupon Code" style="border: 1px solid rgb(224,224,224)">
+                            </div>
+                            <div class="col-md-4">
+                                <button class="btn btn-primary btn-md px-4">Apply Coupon</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-5 pl-4">
+                        <div class="row justify-content-end">
+                            <div class="col-md-7">
+                                <div class="row">
+                                    <div class="col-md-12 text-right border-bottom mb-5">
+                                        <h3 class="text-black h4 text-uppercase">Cart Totals</h3>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-md-6">
+                                        <span class="text-black">Subtotal</span>
+                                    </div>
+                                    <div class="col-md-6 text-right">
+                                        <strong class="text-black">$230.00</strong>
+                                    </div>
+                                </div>
+                                <div class="row mb-5">
+                                    <div class="col-md-6">
+                                        <span class="text-black">Total</span>
+                                    </div>
+                                    <div class="col-md-6 text-right">
+                                        <strong class="text-black">$230.00</strong>
+                                    </div>
+                                </div>
+
+                                <div class="row">                                   
+                                    <button class="btn btn-primary btn-lg btn-block" onclick="window.location='checkout.html'">
+                                        Proceed To
+                                        Checkout
+                                    </button>                                   
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="~/cart/js/jquery-3.3.1.min.js"></script>
+    <script src="~/cart/js/jquery-ui.js"></script>
+    <script src="~/cart/js/popper.min.js"></script>
+    <script src="~/cart/js/bootstrap.min.js"></script>
+    <script src="~/cart/js/owl.carousel.min.js"></script>
+    <script src="~/cart/js/jquery.magnific-popup.min.js"></script>
+    <script src="~/cart/js/aos.js"></script>
+    <script src="~/cart/js/main.js"></script>
+</body>
+</html>

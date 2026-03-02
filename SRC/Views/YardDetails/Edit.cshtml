@@ -1,0 +1,46 @@
+﻿@model QuanLySanBong.Models.YardDetail
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>YardDetail</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="YardDetailId" />
+            <div class="form-group">
+                <label asp-for="PlayGroundId" class="control-label"></label>
+                <select asp-for="PlayGroundId" class="form-control" asp-items="ViewBag.PlayGroundId"></select>
+                <span asp-validation-for="PlayGroundId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SubYardId" class="control-label"></label>
+                <select asp-for="SubYardId" class="form-control" asp-items="ViewBag.SubYardId"></select>
+                <span asp-validation-for="SubYardId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TimeSlotId" class="control-label"></label>
+                <select asp-for="TimeSlotId" class="form-control" asp-items="ViewBag.TimeSlotId"></select>
+                <span asp-validation-for="TimeSlotId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Price" class="control-label"></label>
+                <input asp-for="Price" class="form-control" />
+                <span asp-validation-for="Price" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

@@ -1,0 +1,287 @@
+@model QuanLySanBong.Models.ReportViewModel
+@{
+    Layout = "~/Views/Shared/LayoutSanbong.cshtml";
+    ViewData["Title"] = "Báo cáo thống kê";
+}
+
+<div class="container-fluid py-4">
+    <!-- Summary Cards -->
+    <div class="row">
+        <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+            <div class="card">
+                <div class="card-header p-3 pt-2">
+                    <div class="icon icon-lg icon-shape bg-gradient-dark shadow-dark text-center border-radius-xl mt-n4 position-absolute">
+                        <i class="material-icons opacity-10">weekend</i>
+                    </div>
+                    <div class="text-end pt-1">
+                        <p class="text-sm mb-0 text-capitalize">Tổng doanh thu</p>
+                        <h4 class="mb-0">@Model.TotalRevenue.ToString("N0") VNĐ</h4>
+                    </div>
+                </div>
+                <hr class="dark horizontal my-0">
+                <div class="card-footer p-3">
+                    <p class="mb-0"><span class="text-success text-sm font-weight-bolder"></span>Doanh thu toàn bộ</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+            <div class="card">
+                <div class="card-header p-3 pt-2">
+                    <div class="icon icon-lg icon-shape bg-gradient-primary shadow-primary text-center border-radius-xl mt-n4 position-absolute">
+                        <i class="material-icons opacity-10">person</i>
+                    </div>
+                    <div class="text-end pt-1">
+                        <p class="text-sm mb-0 text-capitalize">Khách hàng</p>
+                        <h4 class="mb-0">@Model.TotalCustomers</h4>
+                    </div>
+                </div>
+                <hr class="dark horizontal my-0">
+                <div class="card-footer p-3">
+                    <p class="mb-0"><span class="text-success text-sm font-weight-bolder"></span>Khách hàng mới</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+            <div class="card">
+                <div class="card-header p-3 pt-2">
+                    <div class="icon icon-lg icon-shape bg-gradient-success shadow-success text-center border-radius-xl mt-n4 position-absolute">
+                        <i class="material-icons opacity-10">receipt_long</i>
+                    </div>
+                    <div class="text-end pt-1">
+                        <p class="text-sm mb-0 text-capitalize">Đơn đặt sân</p>
+                        <h4 class="mb-0">@Model.TotalOrders</h4>
+                    </div>
+                </div>
+                <hr class="dark horizontal my-0">
+                <div class="card-footer p-3">
+                    <p class="mb-0"><span class="text-danger text-sm font-weight-bolder"></span>Tổng số đơn</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+            <div class="card">
+                <div class="card-header p-3 pt-2">
+                    <div class="icon icon-lg icon-shape bg-gradient-info shadow-info text-center border-radius-xl mt-n4 position-absolute">
+                        <i class="material-icons opacity-10">star</i>
+                    </div>
+                    <div class="text-end pt-1">
+                        <p class="text-sm mb-0 text-capitalize">Sân đặt nhiều nhất</p>
+                        <h4 class="mb-0 text-truncate" style="max-width: 100%;" title="@Model.TopPlaygroundName">@Model.TopPlaygroundName</h4>
+                    </div>
+                </div>
+                <hr class="dark horizontal my-0">
+                <div class="card-footer p-3">
+                    <p class="mb-0"><span class="text-success text-sm font-weight-bolder"></span>Top trending</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Charts Row -->
+    <div class="row mt-4">
+        <!-- Revenue Line Chart -->
+        <div class="col-lg-8 col-md-6 mt-4 mb-4">
+            <div class="card z-index-2">
+                <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2 bg-transparent">
+                    <div class="bg-gradient-success shadow-success border-radius-lg py-3 pe-1">
+                        <div class="chart">
+                            <canvas id="chart-revenue" class="chart-canvas" height="300"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <h6 class="mb-0">Doanh thu theo tháng</h6>
+                    <p class="text-sm"> <i class="fa fa-arrow-up text-success"></i> <span class="font-weight-bold">Tăng trưởng</span> năm nay </p>
+                </div>
+            </div>
+        </div>
+        <!-- Playground Doughnut Chart -->
+        <div class="col-lg-4 col-md-6 mt-4 mb-4">
+            <div class="card z-index-2">
+                <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2 bg-transparent">
+                    <div class="bg-gradient-info shadow-info border-radius-lg py-3 pe-1">
+                        <div class="chart">
+                            <canvas id="chart-playground" class="chart-canvas" height="300"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <h6 class="mb-0">Top Sân Theo Doanh Thu</h6>
+                    <p class="text-sm">Tỷ trọng doanh thu giữa các sân</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Recent Invoices Table -->
+    <div class="row mb-4">
+        <div class="col-lg-12 col-md-12 mb-md-0 mb-4">
+            <div class="card">
+                <div class="card-header pb-0">
+                    <div class="row">
+                        <div class="col-lg-6 col-7">
+                            <h6>Đơn đặt tới gần đây</h6>
+                            <p class="text-sm mb-0">
+                                <i class="fa fa-check text-info" aria-hidden="true"></i>
+                                <span class="font-weight-bold ms-1">5 giao dịch</span> mới nhất
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body px-0 pb-2">
+                    <div class="table-responsive">
+                        <table class="table align-items-center mb-0">
+                            <thead>
+                                <tr>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Khách hàng</th>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Tổng tiền</th>
+                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Ngày tạo</th>
+                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Trạng thái</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.RecentInvoices)
+                                {
+                                    <tr>
+                                        <td>
+                                            <div class="d-flex px-2 py-1">
+                                                <div class="d-flex flex-column justify-content-center">
+                                                    <h6 class="mb-0 text-sm">@(item.User?.DisplayName ?? "Unknown")</h6>
+                                                    <p class="text-xs text-secondary mb-0">@item.User?.Username</p>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <span class="text-xs font-weight-bold"> @(item.Total?.ToString("N0")) VNĐ </span>
+                                        </td>
+                                        <td class="align-middle text-center text-sm">
+                                            <span class="text-xs font-weight-bold"> @item.DateCreate.ToString("dd/MM/yyyy HH:mm") </span>
+                                        </td>
+                                        <td class="align-middle text-center text-sm">
+                                            <span class="badge badge-sm bg-gradient-success">Đã thanh toán</span>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/assets/js/plugins/chartjs.min.js"></script>
+    <script>
+        // Revenue Line Chart
+        var ctx = document.getElementById("chart-revenue").getContext("2d");
+        var months = @Html.Raw(Json.Serialize(Model.RevenueByMonths.Select(x => x.Month)));
+        var revenues = @Html.Raw(Json.Serialize(Model.RevenueByMonths.Select(x => x.Revenue)));
+
+        new Chart(ctx, {
+            type: "line",
+            data: {
+                labels: months,
+                datasets: [{
+                    label: "Doanh thu",
+                    tension: 0.4,
+                    borderWidth: 0,
+                    pointRadius: 5,
+                    pointBackgroundColor: "rgba(255, 255, 255, .8)",
+                    pointBorderColor: "transparent",
+                    borderColor: "rgba(255, 255, 255, .8)",
+                    borderWidth: 4,
+                    backgroundColor: "transparent",
+                    fill: true,
+                    data: revenues,
+                    maxBarThickness: 6
+                }],
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                interaction: {
+                    intersect: false,
+                    mode: 'index',
+                },
+                scales: {
+                    y: {
+                        grid: {
+                            drawBorder: false,
+                            display: true,
+                            drawOnChartArea: true,
+                            drawTicks: false,
+                            borderDash: [5, 5],
+                            color: 'rgba(255, 255, 255, .2)'
+                        },
+                        ticks: {
+                            display: true,
+                            color: '#f8f9fa',
+                            padding: 10,
+                            font: { size: 14, weight: 300, family: "Roboto", style: 'normal', lineHeight: 2 },
+                        }
+                    },
+                    x: {
+                        grid: {
+                            drawBorder: false,
+                            display: false,
+                            drawOnChartArea: false,
+                            drawTicks: false,
+                            borderDash: [5, 5]
+                        },
+                        ticks: {
+                            display: true,
+                            color: '#f8f9fa',
+                            padding: 10,
+                            font: { size: 14, weight: 300, family: "Roboto", style: 'normal', lineHeight: 2 },
+                        }
+                    },
+                },
+            },
+        });
+
+        // Playground Doughnut Chart
+        var ctx2 = document.getElementById("chart-playground").getContext("2d");
+        var pgNames = @Html.Raw(Json.Serialize(Model.RevenueByPlaygrounds.Select(x => x.PlaygroundName)));
+        var pgRevenues = @Html.Raw(Json.Serialize(Model.RevenueByPlaygrounds.Select(x => x.Revenue)));
+
+        new Chart(ctx2, {
+            type: "doughnut",
+            data: {
+                labels: pgNames,
+                datasets: [{
+                    label: "Doanh thu",
+                    data: pgRevenues,
+                    backgroundColor: [
+                        'rgba(255, 255, 255, 0.9)',
+                        'rgba(255, 255, 255, 0.7)',
+                        'rgba(255, 255, 255, 0.5)',
+                        'rgba(255, 255, 255, 0.3)',
+                        'rgba(255, 255, 255, 0.1)'
+                    ],
+                    borderColor: "transparent",
+                    borderWidth: 1
+                }],
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'bottom',
+                        labels: {
+                            color: '#ffffff',
+                            font: { size: 12, family: "Roboto" }
+                        }
+                    }
+                },
+                cutout: '70%',
+            },
+        });
+    </script>
+}

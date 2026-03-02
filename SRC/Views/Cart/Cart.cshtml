@@ -1,0 +1,269 @@
+﻿@using System.Globalization;
+@{
+    Layout = null;
+}
+@model Tuple<List<CartDetail>, User>
+
+@{
+    var Total = 0;
+    var list = Model.Item1;
+}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
+    <link rel="icon" type="image/png" href="../assets/img/favicon.png">
+    <title>
+        Quản lý sân bóng đá mini - Phạm Huỳnh Nhân
+    </title>
+    @* File CSS *@
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css">
+    <style>
+        body {
+            background: linear-gradient(110deg, #4d71e1 60%, #919fdf 60%)
+        }
+
+        .first {
+            background-color: white;
+        }
+        a {
+            color: black;
+        }
+        .breadcrumb-item + .breadcrumb-item::before {
+            content: "";
+        }
+        .breadcrumb {
+            background-color: #fff;
+         }
+        /*ol > li > a {
+            font-size: 0.8em;
+        }*/
+        .me-sm-4 {
+            margin-right: 1.5rem !important;
+        }
+
+        .me-sm-1 {
+            margin-right: 0.75rem !important;
+        }
+
+        .pe-md-3 {
+            padding-right: 1rem !important;
+        }
+
+        a:hover {
+            color: #e91e63;
+            text-decoration: none;
+        }
+    </style>
+
+</head>
+<body>
+    <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl" id="navbarBlur" data-scroll="true">
+        <div class="container-fluid py-1 px-3">
+            <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4 justify-content-end" id="navbar">
+                <div class="ms-md-auto pe-md-3 d-flex align-items-center">
+                    <div>
+                        <input type="text" class="form-control" placeholder="Type here...">
+                    </div>
+                </div>
+                <ul class="navbar-nav">
+                    <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
+                        <a href="javascript:;" class="nav-link text-body p-0 me-sm-4" id="iconNavbarSidenav">
+                            <div class="sidenav-toggler-inner">
+                                <i class="sidenav-toggler-line"></i>
+                                <i class="sidenav-toggler-line"></i>
+                                <i class="sidenav-toggler-line"></i>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="nav-item d-flex align-items-center">
+                        <a asp-controller="Cart" asp-action="Cart" class="nav-link text-body font-weight-bold px-0 cart-icon me-sm-4">
+                            <i class="fas fa-shopping-cart"></i>
+                            <span class="cart-count">@ViewBag.Quantity</span>
+                        </a>
+                    </li>
+                    <li class="nav-item d-flex align-items-center">
+                        <a href="../pages/sign-in.html" class="nav-link text-body font-weight-bold px-0">
+                            <i class="fa fa-user me-sm-1"></i>
+                            <a class="d-sm-inline d-none" asp-controller="Home" asp-action="HoSo" asp-route-userId="@ViewBag.userId">@ViewBag.Name</a>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>        
+    </nav>
+
+    <section class="pt-6 pb-6 w-150 h-150">
+        <div class="container first">
+            <div class="row  mx-auto justify-content-center text-center bg">
+                <div class="col-12 mt-3 ">
+                    <nav aria-label="breadcrumb" class="second ">
+                        <ol class="breadcrumb indigo lighten-6 first ">
+                            <li class="breadcrumb-item font-weight-bold ">
+                                <a class="text-uppercase" asp-controller="Home" asp-action="ListSanBong" asp-route-mid=@ViewBag.PlayGroundId>
+                                    <span class="mr-md-3 mr-1">BACK TO SHOP</span>
+                                </a>
+                                <i class="fa fa-angle-double-right " aria-hidden="true"></i>
+                            </li>
+                            <li class="breadcrumb-item font-weight-bold">
+                                <a class="text-uppercase" href="#">
+                                    <span class="mr-md-3 mr-1">SHOPPING BAG</span>
+                                </a>
+                            </li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+            <div class="row w-100">
+                <div class="col-lg-12 col-md-12 col-12">
+                    <h3 class="display-5 mb-2 text-center">Shopping Cart</h3>
+                    <div id="content">
+                        <p class="mb-5 text-center">
+                            <i class="text-info font-weight-bold">@Model.Item1.Count().ToString()</i> items in your cart
+                        </p>              
+                        <table id="shoppingCart" class="table table-condensed table-responsive">
+                            <thead>
+                                <tr>
+                                    <th style="width:40%" >PlayGround</th>
+                                    <th style="width:22%" >Time</th>
+                                    <th style="width:10%" >Price</th>
+                                    <th style="width:16%" ></th>
+                                </tr>
+                            </thead>
+                            <tbody>                                                         
+                                @foreach (var item in Model.Item1)
+                                {
+                                    <tr>
+                                        <td data-th="PlayGround">
+                                            <div class="row">
+                                                <div class="col-md-3 text-left">
+                                                    <img src="~/img/sanbongnhantao.jpg" alt="" class="img-fluid d-none d-md-block rounded mb-2 shadow ">
+                                                </div>
+                                                <div class="col-md-9 text-left mt-sm-2" style="margin-top:0 !important">
+                                                    <h5>@item.YardDetail.PlayGround.PlayGroundName</h5>
+                                                    <p class="font-weight-light">@item.YardDetail.SubYard.SubYardName</p>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td data-th="Time">
+                                            <div class="text-left" style="margin-top:0 !important">
+                                                <p style="margin-bottom: 0.4em">@item.DateBook.ToString("dd/MM/yyyy")</p>
+                                                <p class="font-weight-light">@item.YardDetail.TimeSlot.TimeStart.ToString(@"h\:mm") - @item.YardDetail.TimeSlot.TimeEnd.ToString(@"h\:mm")</p>
+                                            </div>
+                                        </td>
+                                        <td data-th="Price">@item.YardDetail.Price</td>
+                                        <td class="actions" data-th="">
+                                            <div class="text-right">
+                                                <button class="btn btn-white border-secondary bg-white btn-md mb-2 delete-item" id="@item.CartDetailId">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    Total = Total + item.Price;
+                                }
+                            </tbody>
+                        </table>
+                        <div class="float-right text-center">
+                            <h4>Subtotal:</h4>
+                            <h1>@Total.ToString("C", new CultureInfo("vi-VN"))</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-4 d-flex align-items-center">
+                <div class="col-sm-6 order-md-2 text-right">
+                    <a asp-controller="Cart" asp-action="AddCartDetail" class=" btn btn-primary mb-4 btn-lg pl-5 pr-5" style="background-color: #1e93e9; border-color: #1e93e9">Thanh Toán</a>
+                </div>
+                <div class="col-sm-6 mb-3 mb-m-1 order-md-1 text-md-left"></div>
+            </div>
+        </div>
+    </section>
+    @* File JS *@
+    <script src="https://code.jquery.com/jquery-3.7.1.slim.min.js" integrity="sha256-kmHvs0B+OpCW5GVHUNjv9rOmY0IvSIRcf7zGUDTDQM8=" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> <!-- Đảm bảo jQuery đã được tải -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    @*xóa items*@
+    <script>
+        $(document).on('click', '.delete-item', function (e) {
+            var itemId = $(this).attr('id');
+                
+            $.ajax({
+                url: "CartChange",
+                data: { cartDetailId: itemId },
+                success: function (response) {
+                    $("div#content").html(response);
+                    // Cập nhật số lượng giỏ hàng trên badge
+                    var count = $("div#content").find('.delete-item').length;
+                    $('.cart-count').text(count);
+                }                
+            });
+        });
+    </script>
+
+
+    @*<script>
+        $('.add-items').click(function (e) {
+            var list = @Model.Item1; // Lấy ID từ thuộc tính dữ liệu
+            //Gửi ajax request để xóa mục
+            alert(list.Count())
+            $.ajax({
+                url: "AddCartDetail", // Địa chỉ URL của action xử lý xóa
+                data: {cartDetails: list }, // Truyền ID của mục cần xóa
+                }
+            });
+        });
+    </script>*@
+   @* <script>
+        var listArray = [];
+
+        @foreach (var item in list)
+        {
+            @:listArray.push('@item');
+        }
+
+            $('.add-items').click(function (e) {
+                // Gửi ajax request để thêm các mục
+                alert(listArray.length);
+                $.ajax({
+                    url: "AddCartDetail", // Địa chỉ URL của action xử lý thêm
+                    type: "POST", // Phương thức POST để gửi dữ liệu
+                    data: { cartDetails: listArray }, // Truyền danh sách dưới dạng mảng JavaScript
+                    success: function (response) {
+                        // Xử lý phản hồi từ máy chủ nếu cần
+                    },
+                    error: function (error) {
+                        // Xử lý lỗi nếu có
+                    }
+                });
+            });
+    </script>*@
+
+    <style>
+        .cart-icon {
+            position: relative;
+            display: inline-block;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -5px;
+            right: -12px;
+            background-color: red;
+            color: white;
+            font-size: 11px;
+            padding: 2px 6px;
+            border-radius: 50%;
+        }
+
+    </style>
+
+</body>
+</html>

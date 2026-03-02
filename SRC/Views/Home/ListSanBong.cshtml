@@ -1,0 +1,54 @@
+@{
+    Layout = "~/Views/Shared/LayoutSanbong.cshtml";
+    //var colorClasses = new[] { "bg-gradient-primary", "bg-gradient-success", "bg-gradient-dark", "bg-gradient-danger" };
+    var index = 0;
+
+    var colorClasses = new[] { "bg-gradient-primary" };
+    var colorClassesBtn = new[] { "btn-primary" };
+}
+@using X.PagedList.Mvc.Core;
+@model Tuple<X.PagedList.IPagedList<PlayGround>, User>
+<h1>@ViewBag.test</h1>
+<div class="container-fluid py-4">
+    <div class="row mt-4">
+        @foreach (var s in Model.Item1)
+        {
+            <div class="col-lg-4 col-md-6 mt-4 mb-4">
+                <div class="card z-index-2 ">
+                    <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2 bg-transparent">
+                        <div class=" @colorClasses[index % colorClasses.Length] shadow-primary border-radius-lg py-3 pe-1">
+                            <div style="width: 100%; display: flex; justify-content: center;">
+                                <img src="~/img/sanbongnhantao.jpg" style="width: 94%;" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <h6 class="mb-2+ ">@s.PlayGroundName</h6>
+                        <p class="text-sm ">Địa chỉ: @s.Address</p>
+                        <p class="text-sm ">Hotline: @s.PhoneNumber</p>
+                        <hr class="dark horizontal">
+                        <div class="d-flex ">
+                            <a asp-action="DatSan" asp-route-userId="@ViewBag.userId" asp-route-mid="@s.PlayGroundId" class="btn  @colorClassesBtn[index % colorClasses.Length]">Đặt Sân</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            index++;
+        }
+    </div>
+</div>
+<div class="pagination">
+    @Html.PagedListPager(Model.Item1, page => Url.Action("ListSanBong", new {page = page}), new X.PagedList.Web.Common.PagedListRenderOptions {
+    LiElementClasses = new[] { "page-item" },
+    PageClasses = new[] { "page-link" },
+    UlElementClasses = new[] { "pagination" },
+    })
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var message = '@Html.Raw(TempData["Message"])';
+        if (message && message !== "") {
+            alert(message);
+        }
+    });
+</script>
